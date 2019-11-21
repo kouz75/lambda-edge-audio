@@ -1,5 +1,5 @@
 CloudFormation stack to manipulate audio files with lambda@edge
-More information available on [medium (https://medium.com/@stephanecouzinier/how-to-deploy-a-lambda-edge-function-with-cloudformation-80637092e5a2)
+More information available on [medium](https://medium.com/@stephanecouzinier/how-to-deploy-a-lambda-edge-function-with-cloudformation-80637092e5a2)
 
 # reference
 https://docs.aws.amazon.com/lambda/latest/dg/build-pipeline.html
