@@ -39,7 +39,7 @@ function saveFile(data, audioPath) {
 
 exports.handler = (event, context, callback) => {
   const response = event.Records[0].cf.response;
-  if (response.status !== '404') {
+  if (response.status !== '404' && response.status !== '403') {
     callback(null, response);
     return;
   }
