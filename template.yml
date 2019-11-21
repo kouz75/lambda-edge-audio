@@ -52,7 +52,7 @@ Resources:
   S3BucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
-      Bucket: !Ref 'WebsiteS3Bucket'
+      Bucket: !Ref 'AudioFileS3Bucket'
       PolicyDocument:
         Statement:
           - Effect: Allow
