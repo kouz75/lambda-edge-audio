@@ -1,0 +1,28 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - npm install --save-prod
+      #Delete unused binary to reduce package size.
+      - rm -rf node_modules/ffmpeg-static/bin/darwin
+      - rm -rf node_modules/ffmpeg-static/bin/win32
+      - rm -rf node_modules/ffprobe-static/bin/darwin
+      - rm -rf node_modules/ffprobe-static/bin/win32
+      - rm -rf node_modules/ffmpeg-static/bin/linux/ia32
+      - rm -rf node_modules/ffmpeg-static/bin/linux/arm
+      - rm -rf node_modules/ffmpeg-static/bin/linux/arm64
+      - rm -rf node_modules/ffprobe-static/bin/linux/ia32
+      - rm -rf node_modules/ffprobe-static/bin/linux/arm
+
+#  pre_build:
+#    commands:
+#     - npm test
+  build:
+    commands:
+      - aws s3 cp --recursive ./assets s3://$AUDIO_FILE_BUCKET/
+      - aws cloudformation package --template template.yml --s3-bucket $S3_BUCKET --output-template template-export.yml
+
+artifacts:
+  type: zip
+  files:
+    - template-export.yml

@@ -1,0 +1,89 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform:
+  - AWS::Serverless-2016-10-31
+
+Parameters:
+  ProjectId:
+    Type: String
+    Description: id of the project. used to create ressources with the project name.
+
+Resources:
+  AudioLambdaEdgeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Ref 'ProjectId'
+      Handler: index.handler
+      Runtime: nodejs10.x
+      MemorySize: 3008
+      Timeout: 10
+      AutoPublishAlias: live
+      #Environment:
+      #  Variables:
+      #    BUCKET: !Ref 'AudioFileS3Bucket'
+      #    NODE_ENV: prod
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Tags:
+        SITE: !Ref 'ProjectId'
+
+  AudioFileS3Bucket:
+    Type: AWS::S3::Bucket
+    Description: Creating Amazon S3 bucket to store audio files
+    Properties:
+      BucketName: !Join ['-', [ !Ref 'AWS::Region', !Ref 'AWS::AccountId', !Ref 'ProjectId', 'data']]
+      Tags:
+        - Key: APP
+          Value: !Ref 'ProjectId'
+      VersioningConfiguration:
+        Status: Enabled
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+
+  CFS3OriginAccessIdentity:
+    Type: "AWS::CloudFront::CloudFrontOriginAccessIdentity"
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: !Ref 'ProjectId'
+
+  CFS3Distribution:
+    DependsOn: AudioLambdaEdgeFunction
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Origins:
+          - DomainName: !Join ['', [!Ref 'AudioFileS3Bucket', '.s3.amazonaws.com']]
+            Id: myS3Origin
+            S3OriginConfig:
+              OriginAccessIdentity: !Join ['',['origin-access-identity/cloudfront/', !Ref 'CFS3OriginAccessIdentity'] ]
+        Enabled: 'true'
+        Comment:  !Ref 'ProjectId'
+        DefaultRootObject: index.html
+        DefaultCacheBehavior:
+          LambdaFunctionAssociations:
+            - EventType: origin-response
+              LambdaFunctionARN: !Ref AudioLambdaEdgeFunction.Version
+          AllowedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+          TargetOriginId: myS3Origin
+          ForwardedValues:
+            QueryString: 'false'
+            Cookies:
+              Forward: none
+            Headers:
+              - Origin
+              - Access-Control-Request-Headers
+              - Access-Control-Request-Method
+          ViewerProtocolPolicy: redirect-to-https
+        HttpVersion: http2
+        ViewerCertificate:
+          CloudFrontDefaultCertificate: true
+      Tags:
+        - Key: APP
+          Value: !Ref 'ProjectId'
