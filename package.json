@@ -1,0 +1,20 @@
+{
+  "name": "lambda-edge-audio",
+  "version": "0.0.1",
+  "description": "demo project",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage",
+    "lint": "eslint ."
+  },
+  "author": "scouzinier",
+  "dependencies": {
+    "ffmpeg-static": "2.1.0",
+    "ffprobe-static": "^3.0.0",
+    "fluent-ffmpeg": "^2.1.2"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0"
+  },
+  "private": true
+}
