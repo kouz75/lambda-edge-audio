@@ -14,7 +14,7 @@ describe(`Test with correct audio files`, () => {
   test(`Merge file`, (done) => {
     index.handler(require('./request/correctJoinRequest'), null, (err, response) => {
       expect(response.status).toBe('200');
-      expect(response.headers['content-length'][0].value).toBe('61405');
+      expect(response.headers['content-length'][0].value).toBe('61441');
       done();
     });
   });
