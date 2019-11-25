@@ -68,6 +68,8 @@ exports.handler = (event, context, callback) => {
       command.input(audioFile);
     });
     command
+      .audioBitrate(48)
+      .audioFrequency(16000)
       .on('error', (err) => {
         console.error('An error occurred: ' + err.message);
         fs.removeSync(tmpFolder);
