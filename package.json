@@ -1,10 +1,14 @@
 {
   "name": "lambda-edge-audio",
   "version": "0.0.1",
-  "description": "demo project",
+  "description": "AWS CloudFormation stack to manipulate audio files with lambda@edge.",
   "main": "index.js",
   "scripts": {
     "test": "jest --coverage"
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/kouz75/lambda-edge-audio.git"
   },
   "directories": {
     "test": "tests"
@@ -15,7 +19,7 @@
     "audio",
     "ffmpeg"
   ],
-  "author": "scouzinier",
+  "author": "shirkalab",
   "dependencies": {
     "ffmpeg-static": "2.1.0",
     "ffprobe-static": "^3.0.0",
