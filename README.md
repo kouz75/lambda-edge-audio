@@ -1,8 +1,10 @@
 ![AWS CloudFormation Stack](https://miro.medium.com/max/2962/1*VXRQhN_1xsu8sr6Uc1iZIA.png)
 
-CloudFormation stack to manipulate audio files with lambda@edge
+AWS CloudFormation stack to manipulate audio files with lambda@edge
 
 More information on [Medium](https://medium.com/@stephanecouzinier/how-to-deploy-a-lambda-edge-function-with-cloudformation-80637092e5a2)
+
+The project is not ready for production. it's a POC.
 
 # reference
 * https://docs.aws.amazon.com/lambda/latest/dg/build-pipeline.html
