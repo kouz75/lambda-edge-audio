@@ -1,0 +1,96 @@
+{
+  "Records": [
+    {
+      "cf": {
+        "config": {
+          "distributionDomainName": "xxxx.cloudfront.net",
+          "distributionId": "xxxx",
+          "eventType": "origin-response"
+        },
+        "request": {
+          "clientIp": "1.1.1.1",
+          "headers": {
+            "host": [
+              {
+                "key": "Host",
+                "value": "xxxx"
+              }
+            ],
+            "user-agent": [
+              {
+                "key": "User-Agent",
+                "value": "Amazon CloudFront"
+              }
+            ],
+            "via": [
+              {
+                "key": "Via",
+                "value": "2.0 xxxx.cloudfront.net (CloudFront)"
+              }
+            ],
+            "x-forwarded-for": [
+              {
+                "key": "X-Forwarded-For",
+                "value": "1.1.1.1"
+              }
+            ]
+          },
+          "method": "GET",
+          "origin": {
+            "s3": {
+              "authMethod": "origin-access-identity",
+              "customHeaders": {},
+              "domainName": "mydomaine.s3.amazonaws.com",
+              "path": "",
+              "region": "us-east-1"
+            }
+          },
+          "querystring": "",
+          "uri": "/errorFile-1-2"
+        },
+        "response": {
+          "headers": {
+            "content-type": [
+              {
+                "key": "Content-Type",
+                "value": "application/xml"
+              }
+            ],
+            "date": [
+              {
+                "key": "Date",
+                "value": "Thu, 27 Sep 2018 23:50:35 GMT"
+              }
+            ],
+            "server": [
+              {
+                "key": "Server",
+                "value": "AmazonS3"
+              }
+            ],
+            "transfer-encoding": [
+              {
+                "key": "Transfer-Encoding",
+                "value": "chunked"
+              }
+            ],
+            "x-amz-id-2": [
+              {
+                "key": "x-amz-id-2",
+                "value": "uCIoaRdpGj27lPz3SQz5s7WR4hQB2v0sd6+8URMHIzX5HTuXzniscGXBN1x4dgOifRGa/c+Y9Fo="
+              }
+            ],
+            "x-amz-request-id": [
+              {
+                "key": "x-amz-request-id",
+                "value": "A7CB9680F3A027DB"
+              }
+            ]
+          },
+          "status": "404",
+          "statusDescription": "Not Found"
+        }
+      }
+    }
+  ]
+}

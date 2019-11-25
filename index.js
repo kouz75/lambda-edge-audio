@@ -5,24 +5,30 @@ const FfmpegCommand = require('fluent-ffmpeg');
 const randomstring = require('randomstring');
 const fs = require('fs-extra')
 const url = require('url');
+const config = require('./config');
 const AWS = require('aws-sdk');
 const S3 = new AWS.S3({
   signatureVersion: 'v4',
   region: 'us-east-1',
 });
-const BUCKET = '****';
+const BUCKET = config.audioBucket;
 
 function getFile(key, destination) {
   return new Promise((resolve, reject) => {
-    const params = {Bucket: BUCKET, Key: key};
-    const s3Stream = S3.getObject(params).createReadStream();
-    const fileStream = fs.createWriteStream(destination);
-    s3Stream.on('error', reject);
-    fileStream.on('error', reject);
-    fileStream.on('close', () => {
-      resolve(destination);
-    });
-    s3Stream.pipe(fileStream);
+    const fileStream = fs.createWriteStream(destination)
+      .on('error', (err) => {
+        reject(err);
+      })
+      .on('close', () => {
+        resolve(destination);
+      });
+
+    const s3Stream = S3.getObject({Bucket: BUCKET, Key: key})
+      .createReadStream()
+      .on('error', (err) => {
+        reject(err);
+      })
+      .pipe(fileStream);
   });
 }
 
@@ -43,6 +49,7 @@ exports.handler = (event, context, callback) => {
     callback(null, response);
     return;
   }
+
   const tmpFolder = '/tmp/audio/' + randomstring.generate(10);
   const finalAudioFile = tmpFolder + '/final.mp3';
   fs.ensureDirSync(tmpFolder);
@@ -64,6 +71,7 @@ exports.handler = (event, context, callback) => {
       .on('error', (err) => {
         console.error('An error occurred: ' + err.message);
         fs.removeSync(tmpFolder);
+        response.status = '500';
         callback(null, response);
       })
       .on('end', () => {
@@ -79,7 +87,7 @@ exports.handler = (event, context, callback) => {
           response.headers['content-length'] = [{key: 'Content-Length', value: String(buffer.length)}];
           callback(null, response);
         }, (err) => {
-          console.log(err);
+          console.error(err);
           response.status = '500';
           callback(null, response);
         });
@@ -89,5 +97,4 @@ exports.handler = (event, context, callback) => {
     response.status = '500';
     callback(null, response);
   });
-
 };

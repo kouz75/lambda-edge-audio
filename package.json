@@ -21,5 +21,10 @@
     "fluent-ffmpeg": "^2.1.2",
     "fs-extra": "^8.1.0",
     "randomstring": "^1.1.5"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.577.0",
+    "aws-sdk-mock": "^4.5.0",
+    "jest": "^24.9.0"
   }
 }

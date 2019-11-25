@@ -9,7 +9,7 @@ More information available on [medium](https://medium.com/@stephanecouzinier/how
 
 * Create a CloudFormation stack with the template cloudformation.yml the stack must be create in us-east-1 region.
 * Sync this repository  with yur CodeCommit repository create by CloudFormation
-* open index.js and replace **** by the name of the bucket create by CloudFormation
+* during build phase, a configuration file "config.json" will be create. it will contains the name of the data bucket.  
 * Push your change to your repository. 
 The PipeLine should generate a new version of your lambda function and update CloudFront with the correct Lambda Version.
 * Try to open the link https://CLOUDFRONT-domain/1-2-1

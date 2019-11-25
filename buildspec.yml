@@ -2,7 +2,18 @@ version: 0.2
 phases:
   install:
     commands:
-      - npm install --save-prod
+      #- npm uninstal aws-sdk
+      #- npm uninstal aws-sdk-mock
+      - npm install --save-dev
+
+
+  pre_build:
+    commands:
+      #generate config file
+      - echo {\"audioBucket\"':' \"$AUDIO_FILE_BUCKET\"} > ./config.json
+      - npm test
+      #removes “extraneous” packages
+      - npm prune --production
       #Delete unused binary to reduce package size.
       - rm -rf node_modules/ffmpeg-static/bin/darwin
       - rm -rf node_modules/ffmpeg-static/bin/win32
@@ -13,13 +24,9 @@ phases:
       - rm -rf node_modules/ffmpeg-static/bin/linux/arm64
       - rm -rf node_modules/ffprobe-static/bin/linux/ia32
       - rm -rf node_modules/ffprobe-static/bin/linux/arm
-
-#  pre_build:
-#    commands:
-#     - npm test
   build:
     commands:
-      - aws s3 cp --recursive ./assets s3://$AUDIO_FILE_BUCKET/
+      - aws s3 cp --recursive ./assets s3://$AUDIO_FILE_BUCKET/assets/
       - aws cloudformation package --template template.yml --s3-bucket $S3_BUCKET --output-template template-export.yml
 
 artifacts:
