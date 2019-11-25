@@ -2,7 +2,7 @@
 
 AWS CloudFormation stack to manipulate audio files with lambda@edge
 
-More information on Medium [AWS CloudFormation stack to Merge audio files with Lambda@Edge](https://medium.com/@stephanecouzinier/how-to-deploy-a-lambda-edge-function-with-cloudformation-80637092e5a2)
+More information on Medium [AWS CloudFormation stack to Merge audio files with Lambda@Edge](https://medium.com/shirkalab/how-to-deploy-a-lambda-edge-function-with-cloudformation-80637092e5a2)
 
 The project is not ready for production. it's a POC.
 
