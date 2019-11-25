@@ -22,6 +22,5 @@ If everything works fine, you should hear some animals sound
 
 # todo
 * documentation
-* unit test
 * eslint
 * codecommit init from zip file 

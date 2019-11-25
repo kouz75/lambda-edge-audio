@@ -4,6 +4,7 @@
   "description": "demo project",
   "main": "index.js",
   "scripts": {
+    "test": "jest --coverage"
   },
   "directories": {
     "test": "tests"
